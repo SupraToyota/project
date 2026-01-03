@@ -1,6 +1,11 @@
 package com.official_dealer.demo.dto;
 
-public record DealerOfferUpdateStockDTO(
-        Integer stockQuantity) {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
-}
+public record DealerOfferUpdateStockDTO(
+
+        @NotNull
+        @Min(0)
+        Integer stockQuantity
+) {}

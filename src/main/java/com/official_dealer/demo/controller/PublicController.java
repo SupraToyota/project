@@ -1,12 +1,9 @@
 package com.official_dealer.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
-import com.official_dealer.demo.entity.Brand;
-import com.official_dealer.demo.entity.Model;
-import com.official_dealer.demo.entity.DealerOffer;
-import com.official_dealer.demo.service.BrandService;
-import com.official_dealer.demo.service.ModelService;
-import com.official_dealer.demo.service.DealerOfferService;
+import com.official_dealer.demo.dto.*;
+import com.official_dealer.demo.mapper.*;
+import com.official_dealer.demo.service.*;
 
 import java.util.List;
 
@@ -26,35 +23,32 @@ public class PublicController {
         this.offerService = offerService;
     }
 
-    /** Список всех брендов */
+    /** Бренды */
     @GetMapping("/brands")
-    public List<Brand> getAllBrands() {
-        return brandService.getAllBrands();
+    public List<BrandDTO> brands() {
+        return brandService.getAllBrands()
+                .stream()
+                .map(BrandMapper::toDto)
+                .toList();
     }
 
-    /** Список моделей конкретного бренда */
+    /** Модели бренда */
     @GetMapping("/brands/{brandId}/models")
-    public List<Model> getModelsByBrand(@PathVariable Long brandId) {
-        return brandService.getBrandByName(brandService.getAllBrands()
-                        .stream()
-                        .filter(b -> b.getId().equals(brandId))
-                        .findFirst()
-                        .map(Brand::getName)
-                        .orElseThrow(() -> new RuntimeException("Brand not found")))
-                .map(brand -> modelService.getModelsByBrand(brand))
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+    public List<ModelDTO> modelsByBrand(@PathVariable Long brandId) {
+        var brand = brandService.getById(brandId);
+        return modelService.getModelsByBrand(brand)
+                .stream()
+                .map(ModelMapper::toDto)
+                .toList();
     }
 
-    /** Список предложений для модели */
+    /** Предложения модели */
     @GetMapping("/models/{modelId}/offers")
-    public List<DealerOffer> getOffersByModel(@PathVariable Long modelId) {
-        Model model = modelService.getModelByBrandAndName(
-                modelService.getModelsByBrand(modelService.getModelsByBrand(
-                        brandService.getAllBrands().get(0) // заглушка, будет переделано для нормального поиска
-                ).get(0).getBrand(), "") // заглушка
-        ).orElseThrow(() -> new RuntimeException("Model not found"));
-
-        return offerService.getOffersByModel(model);
+    public List<DealerOfferResponseDTO> offersByModel(@PathVariable Long modelId) {
+        var model = modelService.getById(modelId);
+        return offerService.getOffersByModel(model)
+                .stream()
+                .map(DealerOfferMapper::toResponseDto)
+                .toList();
     }
 }
-

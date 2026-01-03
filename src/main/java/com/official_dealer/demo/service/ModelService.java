@@ -31,4 +31,10 @@ public class ModelService {
         Model model = new Model(brand, name);
         return modelRepository.save(model);
     }
+
+    public Model getById(Long id) {
+        return modelRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Model not found"));
+    }
+
 }

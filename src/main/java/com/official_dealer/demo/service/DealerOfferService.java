@@ -29,7 +29,7 @@ public class DealerOfferService {
     }
 
     public DealerOffer createOffer(Dealer dealer, Model model,
-                                   Integer releaseYear, String generationName,
+                                   Integer releaseYear, String generationName, 
                                    Integer stockQuantity, BigDecimal price) {
         DealerOffer offer = new DealerOffer(dealer, model, null, releaseYear, generationName, stockQuantity, price);
         return offerRepository.save(offer);
@@ -44,4 +44,12 @@ public class DealerOfferService {
         offer.setPrice(newPrice);
         return offerRepository.save(offer);
     }
+
+    public DealerOffer getById(Long id) {
+        return offerRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
+    }
+
+
+
 }

@@ -30,4 +30,10 @@ public class BrandService {
         Brand brand = new Brand(name, logoPath);
         return brandRepository.save(brand);
     }
+
+    public Brand getById(Long id) {
+        return brandRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Brand not found"));
+    }
+
 }
