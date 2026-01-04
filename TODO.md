@@ -9,5 +9,17 @@ TASK 1 {
         trim undefind
     }
 
-
 }
+
+
+
+
+
+curl -u login:password http://localhost:8080/api/dealer/...
+
+
+
+http://localhost:8080/swagger-ui/index.html
+curl -u login:password http://localhost:8080/api/dealer/...
+
+

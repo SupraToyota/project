@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "trims",
+    name = "car_trims",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"model_id", "name"})
     }

@@ -3,7 +3,7 @@ package com.official_dealer.auto.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "dealers", uniqueConstraints = {
+@Table(name = "car_dealers", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "name" }),
         @UniqueConstraint(columnNames = { "email" })
 })

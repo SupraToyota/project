@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(
-    name = "brands",
+    name = "car_brands",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
     }

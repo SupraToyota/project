@@ -18,24 +18,44 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config
-    ) throws Exception {
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/public/**").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/api/dealer/**").hasRole("DEALER")
-                .anyRequest().authenticated()
-            )
-            .httpBasic(); // временно, для простоты
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml")
+                        .permitAll()
+
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/dealer/**").hasRole("DEALER")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        .anyRequest().authenticated())
+                .httpBasic();
 
         return http.build();
     }
 }
+// @Bean
+// public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+// http
+// .csrf(csrf -> csrf.disable())
+// .authorizeHttpRequests(auth -> auth
+// .requestMatchers("/api/public/**").permitAll()
+// .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+// .requestMatchers("/api/dealer/**").hasRole("DEALER")
+// .anyRequest().authenticated()
+// )
+// .httpBasic(); // временно, для простоты
+
+// return http.build();
+// }
+// }
