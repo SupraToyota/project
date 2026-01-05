@@ -15,6 +15,14 @@ TASK 1 {
 
 
 
+psql -U postgres
+\c car_official
+GRANT ALL ON SCHEMA public TO official_dealer_auto;
+GRANT CREATE ON SCHEMA public TO official_dealer_auto;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO official_dealer_auto;
+
+
+
 curl -u login:password http://localhost:8080/api/dealer/...
 
 
