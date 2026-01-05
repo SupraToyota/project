@@ -2,6 +2,7 @@ package com.official_dealer.auto.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.official_dealer.auto.entity.Role;
 import com.official_dealer.auto.entity.User;
 
 import java.util.Optional;
@@ -9,5 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
+
+    boolean existsByRole(Role role);
 
 }

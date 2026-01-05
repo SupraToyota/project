@@ -1,15 +1,12 @@
-package com.official_dealer.auto.entity;
 
+package com.official_dealer.auto.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-    name = "app_users",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"email"})
-    }
-)
+@Table(name = "app_users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "email" })
+})
 public class User {
 
     @Id

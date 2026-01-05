@@ -27,11 +27,13 @@ public class AdminBootstrap {
                 return;
             }
 
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin123"));
-            admin.setRole(Role.ADMIN);
-            admin.setEnabled(true);
+            User admin = new User(
+                "admin@dealer.system",
+                passwordEncoder.encode("admin123"),
+                Role.ADMIN,
+                null
+            );
+            admin.setActive(true);
 
             userRepository.save(admin);
         };
